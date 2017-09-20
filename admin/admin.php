@@ -52,6 +52,12 @@ final class DWNMDA_Admin {
 
 		// Action rows in the media list view
 		add_filter('media_row_actions', array(&$this, 'media_row_actions'), 10, 2);
+
+		// Attachment data in AJAX response
+		add_filter('wp_prepare_attachment_for_js', array(&$this, 'wp_prepare_attachment_for_js'), 10, 2);
+
+		// Add footer hook
+		add_action('admin_footer', array(&$this, 'admin_footer'), 0);
 	}
 
 
@@ -91,6 +97,48 @@ final class DWNMDA_Admin {
 
 		// Done
 		return $actions;
+	}
+
+
+
+	/**
+	 * Add a item data in order to use in script templates
+	 */
+	public function wp_prepare_attachment_for_js($response, $attachment) {
+		$response['dwnmda_url'] = $this->download_url($attachment->ID);
+		return $response;
+	}
+
+
+
+	/**
+	 * Link actions hook handler
+	 */
+	public function admin_footer() {
+
+		// Display ?>
+		<script type="text/javascript">
+
+			jQuery(document).ready(function($) {
+
+				var html = $('#tmpl-attachment-details-two-column').html();
+
+				var n, mark = '<# if ( ! data.uploading && data.can.remove ) { #> |';
+				var mark2 = '<# } #>';
+
+				if (-1 === (n = html.indexOf(mark)))
+					return;
+
+				if (-1 === (n = html.indexOf(mark2, n)))
+					return;
+
+				html = html.substr(0, n + mark2.length);
+				html += ' | <a href="{{ data.dwnmda_url }}">Download</a>';
+
+				$('#tmpl-attachment-details-two-column').html(html);
+			});
+
+		</script><?php
 	}
 
 
