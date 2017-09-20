@@ -56,8 +56,8 @@ final class DWNMDA_Admin {
 		// Attachment data in AJAX response
 		add_filter('wp_prepare_attachment_for_js', array(&$this, 'wp_prepare_attachment_for_js'), 10, 2);
 
-		// Add footer hook
-		add_action('admin_footer', array(&$this, 'admin_footer'), 0);
+		// Current screen
+		add_action('current_screen', array(&$this, 'current_screen'));
 	}
 
 
@@ -68,7 +68,7 @@ final class DWNMDA_Admin {
 
 
 	/**
-	 * Check current screen
+	 * Check download params and request
 	 */
 	public function admin_init() {
 
@@ -112,6 +112,22 @@ final class DWNMDA_Admin {
 
 
 	/**
+	 * Actions based on current screen
+	 */
+	public function current_screen($current_screen) {
+
+		// Check proper context
+		if (!empty($current_screen->base) && 'upload' == $current_screen->base &&
+			!empty($current_screen->post_type) && 'attachment' == $current_screen->post_type) {
+
+			// Add footer hook
+			add_action('admin_footer', array(&$this, 'admin_footer'), 0);
+		}
+	}
+
+
+
+	/**
 	 * Link actions hook handler
 	 */
 	public function admin_footer() {
@@ -120,6 +136,10 @@ final class DWNMDA_Admin {
 		<script type="text/javascript">
 
 			jQuery(document).ready(function($) {
+
+				var tmpl = $('#tmpl-attachment-details-two-column');
+				if (!tmpl.length)
+					return;
 
 				var html = $('#tmpl-attachment-details-two-column').html();
 
