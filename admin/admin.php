@@ -131,7 +131,7 @@ final class DWNMDA_Admin {
 
 		// Download file
 		require_once DWNMDA_PATH.'/admin/download.php';
-		DWNMDA_Download::instance($path);
+		DWNMDA_Admin_Download::instance($path);
 	}
 
 

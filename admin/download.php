@@ -6,7 +6,7 @@
  * @package Download Media
  * @subpackage Download Media Admin
  */
-final class DWNMDA_Download {
+final class DWNMDA_Admin_Download {
 
 
 
@@ -30,7 +30,7 @@ final class DWNMDA_Download {
 	/**
 	 * Create or retrieve instance
 	 */
-	public static function instance($path) {
+	public static function instance($path = null) {
 
 		// Check instance
 		if (!isset(self::$instance))
@@ -45,7 +45,11 @@ final class DWNMDA_Download {
 	/**
 	 * Constructor
 	 */
-	private function __construct($path) {
+	private function __construct($path = null) {
+
+		// Check path
+		if (empty($path))
+			return;
 
 		// No timeout
 		@set_time_limit(0);
