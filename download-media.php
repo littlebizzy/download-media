@@ -20,7 +20,7 @@ define('DWNMDA_PATH', dirname(DWNMDA_FILE));
 define('DWNMDA_VERSION', '1.0.0');
 
 // Restricted to the admin area but not in AJAX mode
-if (!is_admin() || (defined('DOING_AJAX') && DOING_AJAX))
+if (!is_admin())
 	return;
 
 // Load main class
