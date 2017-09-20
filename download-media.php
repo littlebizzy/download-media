@@ -23,3 +23,6 @@ define('DWNMDA_VERSION', '1.0.0');
 if (!is_admin() || (defined('DOING_AJAX') && DOING_AJAX))
 	return;
 
+// Load main class
+require_once DWNMDA_PATH.'/admin/admin.php';
+DWNMDA_Admin::instance();
