@@ -1,6 +1,7 @@
 === Download Media ===
 
 Contributors: littlebizzy
+Donate link: https://www.patreon.com/littlebizzy
 Tags: download, media, link, direct, full, original, size, export
 Requires at least: 4.4
 Tested up to: 4.8
